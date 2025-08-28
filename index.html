@@ -12,7 +12,12 @@
         }
         
         body {
-            background: linear-gradient(45deg, #1a0033, #330066, #0d001a);
+            background: 
+                linear-gradient(rgba(26, 0, 51, 0.7), rgba(51, 0, 102, 0.8)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%23001122;stop-opacity:1" /><stop offset="50%" style="stop-color:%23330066;stop-opacity:1" /><stop offset="100%" style="stop-color:%23660033;stop-opacity:1" /></linearGradient><linearGradient id="road" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%23001144;stop-opacity:1" /><stop offset="100%" style="stop-color:%23000022;stop-opacity:1" /></linearGradient></defs><rect width="1200" height="400" fill="url(%23sky)"/><polygon points="0,400 1200,400 1000,800 200,800" fill="url(%23road)"/><rect x="100" y="200" width="80" height="150" fill="%23ff0080" opacity="0.8"/><rect x="200" y="180" width="90" height="170" fill="%23ff0080" opacity="0.6"/><rect x="320" y="220" width="70" height="130" fill="%23ff0080" opacity="0.7"/><rect x="800" y="190" width="100" height="160" fill="%2300ffff" opacity="0.8"/><rect x="920" y="210" width="80" height="140" fill="%2300ffff" opacity="0.6"/><circle cx="150" cy="100" r="25" fill="%23ffff00" opacity="0.4"/><circle cx="250" cy="120" r="20" fill="%23ffff00" opacity="0.3"/><circle cx="350" cy="90" r="30" fill="%23ffff00" opacity="0.5"/><ellipse cx="600" cy="600" rx="300" ry="50" fill="%23ff0080" opacity="0.3"/><ellipse cx="400" cy="650" rx="200" ry="30" fill="%2300ffff" opacity="0.4"/><ellipse cx="800" cy="620" rx="250" ry="40" fill="%23ffff00" opacity="0.2"/></svg>');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             min-height: 100vh;
             font-family: 'Arial', sans-serif;
             overflow-x: hidden;
@@ -22,13 +27,14 @@
         .tablet-container {
             max-width: 900px;
             margin: 50px auto;
-            background: linear-gradient(135deg, #2a2a3a, #1a1a2e);
+            background: linear-gradient(135deg, rgba(42, 42, 58, 0.95), rgba(26, 26, 46, 0.95));
             border-radius: 30px;
             padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 255, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 255, 255, 0.3), 0 0 100px rgba(255, 0, 128, 0.2);
             border: 3px solid #00ffff;
             position: relative;
             z-index: 10;
+            backdrop-filter: blur(10px);
         }
         
         .title {
@@ -161,7 +167,10 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: linear-gradient(45deg, #1a0033, #330066);
+            background: 
+                linear-gradient(rgba(26, 0, 51, 0.9), rgba(51, 0, 102, 0.9)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%23001122;stop-opacity:1" /><stop offset="50%" style="stop-color:%23330066;stop-opacity:1" /><stop offset="100%" style="stop-color:%23660033;stop-opacity:1" /></linearGradient></defs><rect width="1200" height="800" fill="url(%23sky)"/></svg>');
+            background-size: cover;
             z-index: 1000;
             padding: 20px;
             box-sizing: border-box;
@@ -262,7 +271,7 @@
                 <p>Battle with crystal cats</p>
             </div>
             
-            <a href="https://x.com" target="_blank" class="option-card">
+            <a href="https://x.com/vibekittycrypto" target="_blank" class="option-card">
                 <h3>🐦 X Account</h3>
                 <p>Follow us on X</p>
             </a>
