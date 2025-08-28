@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Kitty</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(45deg, #1a0033, #330066, #0d001a);
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .tablet-container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: linear-gradient(135deg, #2a2a3a, #1a1a2e);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 255, 255, 0.3);
+            border: 3px solid #00ffff;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 40px;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(0, 255, 255, 0.5); }
+            to { text-shadow: 0 0 30px rgba(255, 0, 255, 0.8); }
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .option-card {
+            background: linear-gradient(135deg, #4a4a6a, #3a3a5a);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid #00ffff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: #ffffff;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 255, 255, 0.4);
+            border-color: #ff00ff;
+        }
+        
+        .option-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #00ffff;
+        }
+        
+        .option-card p {
+            font-size: 1rem;
+            color: #cccccc;
+        }
+        
+        /* Floating cats */
+        .cat {
+            position: absolute;
+            font-size: 2rem;
+            animation: float 4s ease-in-out infinite;
+            z-index: 1;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        /* Blue crystal fart particles */
+        .fart-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(45deg, #00ffff, #0066ff);
+            border-radius: 50%;
+            animation: fart 3s linear infinite;
+            box-shadow: 0 0 10px #00ffff;
+        }
+        
+        @keyframes fart {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(100px, -100px) scale(0.3);
+            }
+        }
+        
+        /* Crystal trail effect */
+        .crystal-trail {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00ffff;
+            border-radius: 50%;
+            animation: trail 2s linear infinite;
+            box-shadow: 0 0 15px #00ffff;
+        }
+        
+        @keyframes trail {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(150px, -80px);
+            }
+        }
+        
+        .nothing-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            z-index: 1000;
+        }
+        
+        .war-game {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(45deg, #1a0033, #330066);
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .game-title {
+            color: #00ffff;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+        
+        .card-game {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cat-card {
+            background: linear-gradient(135deg, #4a4a6a, #3a3a5a);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #00ffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        
+        .cat-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.5);
+        }
+        
+        .cat-emoji {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #ff00ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            z-index: 1001;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .tablet-container {
+                margin: 20px;
+                padding: 20px;
+            }
+            
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-title {
+                font-size: 2rem;
+            }
+            
+            .card-game {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tablet-container">
+        <h1 class="title">🐱 VIBE KITTY 🐱</h1>
+        
+        <div class="options-grid">
+            <div class="option-card" onclick="connectPhantom()">
+                <h3>💎 Crypto Wallet</h3>
+                <p>Connect to Phantom Wallet</p>
+            </div>
+            
+            <a href="https://pump.fun" target="_blank" class="option-card">
+                <h3>🚀 Pump.fun</h3>
+                <p>Launch to the moon!</p>
+            </a>
+            
+            <div class="option-card" onclick="showWarGame()">
+                <h3>🎮 Cat War Game</h3>
+                <p>Battle with crystal cats</p>
+            </div>
+            
+            <a href="https://x.com" target="_blank" class="option-card">
+                <h3>🐦 X Account</h3>
+                <p>Follow us on X</p>
+            </a>
+            
+            <a href="https://t.me" target="_blank" class="option-card">
+                <h3>📱 Telegram</h3>
+                <p>Join our community</p>
+            </a>
+            
+            <div class="option-card" onclick="showNothingPage()">
+                <h3>⚪ Nothing Page</h3>
+                <p>Enter the void</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Nothing Page -->
+    <div class="nothing-page" id="nothingPage">
+        <button class="back-btn" onclick="hideNothingPage()">← Back</button>
+    </div>
+    
+    <!-- War Game -->
+    <div class="war-game" id="warGame">
+        <button class="back-btn" onclick="hideWarGame()">← Back</button>
+        <h2 class="game-title">🐱 VIBE KITTY CRYSTAL BATTLE 🐱</h2>
+        <div class="card-game">
+            <div class="cat-card" onclick="playCard(this, 'Laser Cat', 95)">
+                <div class="cat-emoji">😸</div>
+                <h4>Laser Cat</h4>
+                <p>Power: 95</p>
+            </div>
+            <div class="cat-card" onclick="playCard(this, 'Crystal Fart Cat', 88)">
+                <div class="cat-emoji">😹</div>
+                <h4>Crystal Fart Cat</h4>
+                <p>Power: 88</p>
+            </div>
+            <div class="cat-card" onclick="playCard(this, 'Ninja Cat', 92)">
+                <div class="cat-emoji">😼</div>
+                <h4>Ninja Cat</h4>
+                <p>Power: 92</p>
+            </div>
+            <div class="cat-card" onclick="playCard(this, 'Rainbow Cat', 85)">
+                <div class="cat-emoji">😻</div>
+                <h4>Rainbow Cat</h4>
+                <p>Power: 85</p>
+            </div>
+            <div class="cat-card" onclick="playCard(this, 'Thunder Cat', 90)">
+                <div class="cat-emoji">🙀</div>
+                <h4>Thunder Cat</h4>
+                <p>Power: 90</p>
+            </div>
+            <div class="cat-card" onclick="playCard(this, 'Ice Crystal Cat', 87)">
+                <div class="cat-emoji">😿</div>
+                <h4>Ice Crystal Cat</h4>
+                <p>Power: 87</p>
+            </div>
+            <div class="cat-card" onclick="playCard(this, 'Fire Fart Cat', 93)">
+                <div class="cat-emoji">😾</div>
+                <h4>Fire Fart Cat</h4>
+                <p>Power: 93</p>
+            </div>
+            <div class="cat-card" onclick="playCard(this, 'Cosmic Cat', 98)">
+                <div class="cat-emoji">🐱</div>
+                <h4>Cosmic Cat</h4>
+                <p>Power: 98</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate floating cats and fart particles
+        function createFloatingElements() {
+            const catEmojis = ['😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾', '🐱'];
+            
+            // Create cats
+            for (let i = 0; i < 20; i++) {
+                const cat = document.createElement('div');
+                cat.className = 'cat';
+                cat.innerHTML = catEmojis[Math.floor(Math.random() * catEmojis.length)];
+                cat.style.left = Math.random() * 100 + '%';
+                cat.style.top = Math.random() * 100 + '%';
+                cat.style.animationDelay = Math.random() * 4 + 's';
+                document.body.appendChild(cat);
+                
+                // Add fart particles to each cat
+                setInterval(() => {
+                    createFartParticle(cat);
+                }, 500 + Math.random() * 1000);
+            }
+        }
+        
+        function createFartParticle(cat) {
+            const particle = document.createElement('div');
+            particle.className = 'fart-particle';
+            const rect = cat.getBoundingClientRect();
+            particle.style.left = rect.left + rect.width/2 + 'px';
+            particle.style.top = rect.top + rect.height + 'px';
+            particle.style.animationDelay = Math.random() * 0.5 + 's';
+            document.body.appendChild(particle);
+            
+            // Create crystal trail
+            setTimeout(() => {
+                createCrystalTrail(particle);
+            }, 200);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 3000);
+        }
+        
+        function createCrystalTrail(source) {
+            const trail = document.createElement('div');
+            trail.className = 'crystal-trail';
+            const rect = source.getBoundingClientRect();
+            trail.style.left = rect.left + 'px';
+            trail.style.top = rect.top + 'px';
+            document.body.appendChild(trail);
+            
+            setTimeout(() => {
+                trail.remove();
+            }, 2000);
+        }
+        
+        // Phantom wallet connection
+        function connectPhantom() {
+            if (window.solana && window.solana.isPhantom) {
+                window.solana.connect().then(response => {
+                    alert('Connected to Phantom! 🦄\nPublic Key: ' + response.publicKey.toString());
+                }).catch(err => {
+                    alert('Connection failed: ' + err.message);
+                });
+            } else {
+                alert('Phantom wallet not found! Please install Phantom wallet extension. 👻');
+                window.open('https://phantom.app/', '_blank');
+            }
+        }
+        
+        // Show/hide pages
+        function showNothingPage() {
+            document.getElementById('nothingPage').style.display = 'block';
+        }
+        
+        function hideNothingPage() {
+            document.getElementById('nothingPage').style.display = 'none';
+        }
+        
+        function showWarGame() {
+            document.getElementById('warGame').style.display = 'block';
+        }
+        
+        function hideWarGame() {
+            document.getElementById('warGame').style.display = 'none';
+        }
+        
+        // Card game logic
+        function playCard(card, name, power) {
+            card.style.transform = 'scale(1.2) rotate(360deg)';
+            card.style.boxShadow = '0 20px 50px rgba(0, 255, 255, 0.8)';
+            
+            setTimeout(() => {
+                alert(`💥 ${name} attacks with ${power} power! 💥\nCrystal fart explosion activated! 💎💨`);
+                card.style.transform = 'scale(1.05)';
+                card.style.boxShadow = '0 10px 30px rgba(0, 255, 255, 0.5)';
+            }, 500);
+        }
+        
+        // Initialize
+        createFloatingElements();
+        
+        // Continue generating particles
+        setInterval(createFloatingElements, 10000);
+    </script>
+</body>
+</html>
